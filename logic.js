@@ -74,10 +74,15 @@ const addButtonEvents = () => {
           currentOperator = "";
           break;
         case "delete":
+          console.warn("TODO");
           break;
         case "reset":
+          leftOperand = 0;
+          rightOperand = 0;
+          currentOperator = "";
           break;
         case "percentage":
+          console.warn("TODO");
           break;
         case "dot":
           if (currentOperator) {
