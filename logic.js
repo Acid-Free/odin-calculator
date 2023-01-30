@@ -1,10 +1,12 @@
 const buttons = document.querySelectorAll("button");
+const input = document.querySelector(".input");
 const output = document.querySelector(".output");
 
 let leftOperand = "";
 let rightOperand = "";
 let currentOperator = "";
-let displayValue = leftOperand;
+let upperValue = "";
+let lowerValue = leftOperand;
 
 const add = (num1, num2) => {
   return num1 + num2;
@@ -31,7 +33,7 @@ const operate = (operator, num1, num2) => {
       return add(num1, num2);
     case "-":
       return subtract(num1, num2);
-    case "*":
+    case "x":
       return multiply(num1, num2);
     case "/":
       return divide(num1, num2);
@@ -41,11 +43,16 @@ const operate = (operator, num1, num2) => {
 };
 
 const updateDisplay = () => {
-  displayValue = `${
-    leftOperand ? leftOperand : 0
-  } ${currentOperator} ${rightOperand}`;
+  if (currentOperator) {
+    upperValue = `${leftOperand ? leftOperand : 0} ${currentOperator}`;
+    lowerValue = `${rightOperand ? rightOperand : 0}`;
+  } else {
+    upperValue = "";
+    lowerValue = `${leftOperand ? leftOperand : 0}`;
+  }
 
-  output.innerText = displayValue;
+  input.innerText = upperValue;
+  output.innerText = lowerValue;
 };
 
 // checks a string if it represents a floating number without fractional part
