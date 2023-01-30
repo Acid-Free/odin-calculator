@@ -92,15 +92,31 @@ const addButtonEvents = () => {
           }
           break;
         case "add":
+          if (rightOperand) {
+            leftOperand = operate(currentOperator, leftOperand, rightOperand);
+            rightOperand = "";
+          }
           currentOperator = "+";
           break;
         case "subtract":
+          if (rightOperand) {
+            leftOperand = operate(currentOperator, leftOperand, rightOperand);
+            rightOperand = "";
+          }
           currentOperator = "-";
           break;
         case "multiply":
+          if (rightOperand) {
+            leftOperand = operate(currentOperator, leftOperand, rightOperand);
+            rightOperand = "";
+          }
           currentOperator = "x";
           break;
         case "divide":
+          if (rightOperand) {
+            leftOperand = operate(currentOperator, leftOperand, rightOperand);
+            rightOperand = "";
+          }
           currentOperator = "/";
           break;
         default:
