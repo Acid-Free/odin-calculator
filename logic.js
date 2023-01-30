@@ -69,9 +69,14 @@ const addButtonEvents = () => {
     button.addEventListener("click", (e) => {
       switch (e.target.className) {
         case "equals":
-          leftOperand = operate(currentOperator, leftOperand, rightOperand);
-          rightOperand = "";
-          currentOperator = "";
+          if (leftOperand && rightOperand) {
+            leftOperand = operate(currentOperator, leftOperand, rightOperand);
+            rightOperand = "";
+            currentOperator = "";
+          } else {
+            leftOperand = "";
+            currentOperator = "";
+          }
           break;
         case "delete":
           console.warn("TODO");
