@@ -189,6 +189,7 @@ const addButtonEvents = () => {
           case "percentage":
             if (rightOperand) rightOperand = roundNumber(rightOperand / 100);
             else if (leftOperand) leftOperand = roundNumber(leftOperand / 100);
+            else if (result) result = roundNumber(result / 100);
             break;
           case "dot":
             if (currentOperator) {
