@@ -161,51 +161,55 @@ function performOperation(operation) {
 const addButtonEvents = () => {
   [...buttons].forEach((button) => {
     button.addEventListener("click", (e) => {
-      switch (e.target.className) {
-        case "add":
-        case "subtract":
-        case "multiply":
-        case "divide":
-          performOperation(e.target.className);
-          break;
-        case "equals":
-          result = getResult();
-          break;
-        case "delete":
-          console.warn("TODO");
-          break;
-        case "reset":
-          leftOperand = "";
-          rightOperand = "";
-          currentOperator = "";
-          result = "";
-          break;
-        case "percentage":
-          console.warn("TODO");
-          break;
-        case "dot":
-          if (currentOperator) {
-            if (![...rightOperand].includes("."))
-              rightOperand = rightOperand === "" ? "0." : rightOperand + ".";
-          } else {
-            if (![...leftOperand].includes("."))
-              leftOperand = leftOperand === "" ? "0." : leftOperand + ".";
-          }
-          break;
-        default:
-          const buttonText = e.target.innerText;
-          // If there is a result and user enters a number instead of operator, discard result
-          if (result) result = "";
+      e.target.classList.forEach((className) => {
+        switch (className) {
+          case "add":
+          case "subtract":
+          case "multiply":
+          case "divide":
+            performOperation(className);
+            break;
+          case "equals":
+            result = getResult();
+            break;
+          case "delete":
+            console.warn("TODO");
+            break;
+          case "reset":
+            leftOperand = "";
+            rightOperand = "";
+            currentOperator = "";
+            result = "";
+            break;
+          case "percentage":
+            console.warn("TODO");
+            break;
+          case "dot":
+            if (currentOperator) {
+              if (![...rightOperand].includes("."))
+                rightOperand = rightOperand === "" ? "0." : rightOperand + ".";
+            } else {
+              if (![...leftOperand].includes("."))
+                leftOperand = leftOperand === "" ? "0." : leftOperand + ".";
+            }
+            break;
+          case "number":
+            const buttonText = e.target.innerText;
+            // If there is a result and user enters a number instead of operator, discard result
+            if (result) result = "";
 
-          if (currentOperator) {
-            // Don't add zero if operand is empty (empty string ("") is represented by 0 in updateDisplay())
-            if (buttonText === "0" && !rightOperand) return;
-            rightOperand += buttonText;
-          } else {
-            if (buttonText === "0" && !leftOperand) return;
-            leftOperand += buttonText;
-          }
-      }
+            if (currentOperator) {
+              // Don't add zero if operand is empty (empty string ("") is represented by 0 in updateDisplay())
+              if (buttonText === "0" && !rightOperand) return;
+              rightOperand += buttonText;
+            } else {
+              if (buttonText === "0" && !leftOperand) return;
+              leftOperand += buttonText;
+            }
+            break;
+        }
+      });
+
       updateDisplay();
     });
   });
