@@ -30,6 +30,7 @@ body {
 
 .upper-output,
 .lower-output {
+  padding: 5px;
   color: #ffffff;
   inline-size: 240px;
   overflow-wrap: break-word;
