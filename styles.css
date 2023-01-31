@@ -28,8 +28,8 @@ body {
   gap: 10px;
 }
 
-.input,
-.output {
+.upper-output,
+.lower-output {
   inline-size: 240px;
   overflow-wrap: break-word;
 }

@@ -1,12 +1,10 @@
 const buttons = document.querySelectorAll("button");
-const input = document.querySelector(".input");
-const output = document.querySelector(".output");
+const upperOutput = document.querySelector(".upper-output");
+const lowerOutput = document.querySelector(".lower-output");
 
 let leftOperand = "";
 let rightOperand = "";
 let currentOperator = "";
-let upperValue = "";
-let lowerValue = leftOperand;
 
 const add = (num1, num2) => {
   return num1 + num2;
@@ -43,13 +41,13 @@ const operate = (operator, num1, num2) => {
 };
 
 const updateDisplay = () => {
-  if (currentOperator) {
-    upperValue = `${leftOperand ? leftOperand : 0} ${currentOperator}`;
-    lowerValue = `${rightOperand ? rightOperand : 0}`;
-  } else {
-    upperValue = "";
-    lowerValue = `${leftOperand ? leftOperand : 0}`;
-  }
+  // if (currentOperator) {
+  //   upperValue = `${leftOperand ? leftOperand : 0} ${currentOperator}`;
+  //   lowerValue = `${rightOperand ? rightOperand : 0}`;
+  // } else {
+  //   upperValue = "";
+  //   lowerValue = `${leftOperand ? leftOperand : 0}`;
+  // }
 
   input.innerText = upperValue;
   output.innerText = lowerValue;
@@ -69,14 +67,6 @@ const addButtonEvents = () => {
     button.addEventListener("click", (e) => {
       switch (e.target.className) {
         case "equals":
-          if (leftOperand && rightOperand) {
-            leftOperand = operate(currentOperator, leftOperand, rightOperand);
-            rightOperand = "";
-            currentOperator = "";
-          } else {
-            leftOperand = "";
-            currentOperator = "";
-          }
           break;
         case "delete":
           console.warn("TODO");
@@ -90,39 +80,14 @@ const addButtonEvents = () => {
           console.warn("TODO");
           break;
         case "dot":
-          if (currentOperator) {
-            if (![...rightOperand].includes(".")) rightOperand += ".";
-          } else {
-            if (![...leftOperand].includes(".")) leftOperand += ".";
-          }
           break;
         case "add":
-          if (rightOperand) {
-            leftOperand = operate(currentOperator, leftOperand, rightOperand);
-            rightOperand = "";
-          }
-          currentOperator = "+";
           break;
         case "subtract":
-          if (rightOperand) {
-            leftOperand = operate(currentOperator, leftOperand, rightOperand);
-            rightOperand = "";
-          }
-          currentOperator = "-";
           break;
         case "multiply":
-          if (rightOperand) {
-            leftOperand = operate(currentOperator, leftOperand, rightOperand);
-            rightOperand = "";
-          }
-          currentOperator = "x";
           break;
         case "divide":
-          if (rightOperand) {
-            leftOperand = operate(currentOperator, leftOperand, rightOperand);
-            rightOperand = "";
-          }
-          currentOperator = "/";
           break;
         default:
           if (currentOperator) {
