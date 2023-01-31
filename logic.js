@@ -92,6 +92,7 @@ const isWholeFloat = (input) => {
   // if false, should mean that there is fractional part
   const noFractional = parseInt(input) === parseFloat(input);
   // if only noFractional is returned, this function would also return true for integers
+  // added third condition (parseFloat...) to make sure that input does not represent zero when converted to number
   return containsDot && noFractional;
 };
 
@@ -164,21 +165,25 @@ const addButtonEvents = () => {
           break;
         case "dot":
           if (currentOperator) {
-            if (![...rightOperand].includes(".")) rightOperand += ".";
+            if (![...rightOperand].includes("."))
+              rightOperand = rightOperand === "" ? "0." : rightOperand + ".";
           } else {
-            if (![...leftOperand].includes(".")) leftOperand += ".";
+            if (![...leftOperand].includes("."))
+              leftOperand = leftOperand === "" ? "0." : leftOperand + ".";
           }
           break;
         default:
+          const buttonText = e.target.innerText;
           // If there is a result and user enters a number instead of operator, discard result
           if (result) result = "";
 
           if (currentOperator) {
-            rightOperand += e.target.innerText;
-            if (isWholeFloat(rightOperand)) rightOperand += ".";
+            // Don't add zero if operand is empty (empty string ("") is represented by 0 in updateDisplay())
+            if (buttonText === "0" && !rightOperand) return;
+            rightOperand += buttonText;
           } else {
-            leftOperand += e.target.innerText;
-            if (isWholeFloat(leftOperand)) leftOperand += ".";
+            if (buttonText === "0" && !leftOperand) return;
+            leftOperand += buttonText;
           }
       }
       updateDisplay();
