@@ -5,7 +5,11 @@ const lowerOutput = document.querySelector(".lower-output");
 let leftOperand = "";
 let rightOperand = "";
 let currentOperator = "";
+// operation result in string format
 let result = "";
+
+// last successful operation
+let previousOperation = "";
 
 const maxDecimalPlaces = 5;
 
@@ -65,6 +69,8 @@ const operate = (operator, num1, num2) => {
       );
   }
 
+  previousOperation = `${leftOperand} ${currentOperator} ${rightOperand} =`;
+
   // round output
   const rounder = Math.pow(10, maxDecimalPlaces);
   output = Math.round(output * rounder) / rounder;
@@ -76,6 +82,7 @@ const updateDisplay = () => {
   let upperValue = "";
   let lowerValue = "";
   if (result) {
+    upperValue = previousOperation;
     lowerValue = result === Infinity ? "You can't do that..." : result;
   }
   // If an operator is selected, place the left operand along with the operator up top
