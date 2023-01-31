@@ -27,6 +27,9 @@ const operate = (operator, num1, num2) => {
   num1 = parseFloat(num1);
   num2 = parseFloat(num2);
 
+  // Assumption: at this point, num2 cannot be Infinity
+  if (num1 === Infinity) num1 = 0;
+
   if (isNaN(num1)) num1 = 0;
   // if num2 is empty, assign it the value of num1
   // Assumption: there is no way num2 is going to get a NaN value that is not ""
@@ -60,14 +63,21 @@ const updateDisplay = () => {
   let upperValue = "";
   let lowerValue = "";
   if (result) {
-    lowerValue = result;
+    lowerValue = result === Infinity ? "You can't do that..." : result;
   }
   // If an operator is selected, place the left operand along with the operator up top
+  // If leftOperand is Infinity, just show 0: operate() should take care of the conversions
   else if (currentOperator) {
-    upperValue = `${leftOperand ? leftOperand : 0} ${currentOperator}`;
+    upperValue = `${
+      leftOperand ? (leftOperand === Infinity ? 0 : leftOperand) : 0
+    } ${currentOperator}`;
     // If rightOperand is empty, show the leftOperand
     // Note that rightOperand is not being assigned the leftOperand value
-    lowerValue = rightOperand ? rightOperand : leftOperand;
+    lowerValue = rightOperand
+      ? rightOperand
+      : leftOperand === Infinity
+      ? 0
+      : leftOperand;
   } else {
     lowerValue = `${leftOperand ? leftOperand : 0}`;
   }
