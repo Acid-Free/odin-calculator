@@ -7,6 +7,8 @@ let rightOperand = "";
 let currentOperator = "";
 let result = "";
 
+const maxDecimalPlaces = 5;
+
 const add = (num1, num2) => {
   return num1 + num2;
 };
@@ -35,15 +37,20 @@ const operate = (operator, num1, num2) => {
   // Assumption: there is no way num2 is going to get a NaN value that is not ""
   if (isNaN(num2)) num2 = num1;
 
+  let output = 0;
   switch (operator) {
     case "+":
-      return add(num1, num2);
+      output = add(num1, num2);
+      break;
     case "-":
-      return subtract(num1, num2);
+      output = subtract(num1, num2);
+      break;
     case "x":
-      return multiply(num1, num2);
+      output = multiply(num1, num2);
+      break;
     case "/":
-      return divide(num1, num2);
+      output = divide(num1, num2);
+      break;
     // When equals is pressed without an operator
     case "":
       return num1;
@@ -57,6 +64,12 @@ const operate = (operator, num1, num2) => {
         num2
       );
   }
+
+  // round output
+  const rounder = Math.pow(10, maxDecimalPlaces);
+  output = Math.round(output * rounder) / rounder;
+
+  return output;
 };
 
 const updateDisplay = () => {
