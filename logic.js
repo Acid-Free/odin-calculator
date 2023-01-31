@@ -85,11 +85,28 @@ const isWholeFloat = (input) => {
   return containsDot && noFractional;
 };
 
+function getResult() {
+  const result = operate(currentOperator, leftOperand, rightOperand);
+  leftOperand = "";
+  rightOperand = "";
+  currentOperator = "";
+  return result;
+}
+
 function performOperation(operation) {
   // if there is a result and an operator is selected, result will be discarded and its value will be assigned to leftOperand
   if (result) {
     leftOperand = result;
     result = "";
+  }
+
+  // invoke operate() if leftOperand and rightOperand are not empty
+  // note that if rightOperand is present, leftOperand can be assumed to exist too
+  // after assigning a value to result, this function is called again because choosing the currentOperator is the initial reason for invoking it in the first place, added return to prevent execution duplication
+  if (rightOperand) {
+    result = getResult();
+    performOperation(operation);
+    return;
   }
 
   switch (operation) {
@@ -114,11 +131,14 @@ const addButtonEvents = () => {
   [...buttons].forEach((button) => {
     button.addEventListener("click", (e) => {
       switch (e.target.className) {
+        case "add":
+        case "subtract":
+        case "multiply":
+        case "divide":
+          performOperation(e.target.className);
+          break;
         case "equals":
-          result = operate(currentOperator, leftOperand, rightOperand);
-          leftOperand = "";
-          rightOperand = "";
-          currentOperator = "";
+          result = getResult();
           break;
         case "delete":
           console.warn("TODO");
@@ -138,12 +158,6 @@ const addButtonEvents = () => {
           } else {
             if (![...leftOperand].includes(".")) leftOperand += ".";
           }
-          break;
-        case "add":
-        case "subtract":
-        case "multiply":
-        case "divide":
-          performOperation(e.target.className);
           break;
         default:
           // If there is a result and user enters a number instead of operator, discard result
