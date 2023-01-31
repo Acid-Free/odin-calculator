@@ -173,7 +173,10 @@ const addButtonEvents = () => {
             result = getResult();
             break;
           case "delete":
-            console.warn("TODO");
+            if (rightOperand) rightOperand = rightOperand.slice(0, -1);
+            else if (currentOperator) currentOperator = currentOperator = "";
+            else if (leftOperand) leftOperand = leftOperand.slice(0, -1);
+            else result = "";
             break;
           case "reset":
             leftOperand = "";
