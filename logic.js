@@ -71,14 +71,16 @@ const operate = (operator, num1, num2) => {
 
   previousOperation = `${leftOperand} ${currentOperator} ${rightOperand} =`;
 
-  // round output
-  const rounder = Math.pow(10, maxDecimalPlaces);
-  output = Math.round(output * rounder) / rounder;
-
-  return output;
+  return roundNumber(output);
 };
 
-const updateDisplay = () => {
+function roundNumber(num) {
+  const rounder = Math.pow(10, maxDecimalPlaces);
+  num = Math.round(num * rounder) / rounder;
+  return num;
+}
+
+function updateDisplay() {
   let upperValue = "";
   let lowerValue = "";
   if (result) {
@@ -104,7 +106,7 @@ const updateDisplay = () => {
 
   upperOutput.innerText = upperValue;
   lowerOutput.innerText = lowerValue;
-};
+}
 
 // checks a string if it represents a floating number without fractional part
 const isWholeFloat = (input) => {
@@ -185,7 +187,8 @@ const addButtonEvents = () => {
             result = "";
             break;
           case "percentage":
-            console.warn("TODO");
+            if (rightOperand) rightOperand = roundNumber(rightOperand / 100);
+            else if (leftOperand) leftOperand = roundNumber(leftOperand / 100);
             break;
           case "dot":
             if (currentOperator) {
