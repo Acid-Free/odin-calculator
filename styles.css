@@ -56,6 +56,14 @@ body {
   padding: 20px;
 }
 
+.buttons > button:active {
+  filter: brightness(80%);
+}
+
+.buttons > .operator:focus {
+  filter: brightness(80%);
+}
+
 .buttons > .operation {
   background-color: #323232;
 }
